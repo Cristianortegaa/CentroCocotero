@@ -1,0 +1,153 @@
+/* =========================================
+   1. SETUP & VARIABLES (La base de todo)
+   ========================================= */
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;600&family=Nunito:wght@400;700&display=swap');
+
+:root {
+    /* Paleta Centro Cocotero */
+    --bg-color: #F4E4BA;       /* Arena Vainilla */
+    --text-color: #422A21;     /* Café Coco */
+    --primary-color: #FF9F1C;  /* Naranja Mango (Botones/CTA) */
+    --secondary-color: #16BABD;/* Turquesa Caribe (Títulos/Links) */
+    --accent-color: #488B49;   /* Verde Palmera (Precios/Éxito) */
+    --white-soft: #fffdf5;     /* Un blanco roto para las tarjetas */
+
+    /* Espaciado y Bordes */
+    --border-radius: 12px;     /* Bordes redondeados estilo "friendly" */
+    --shadow-retro: 4px 4px 0px var(--text-color); /* Sombra dura estilo retro/cartoon */
+}
+
+/* =========================================
+   2. RESET & GLOBAL STYLES
+   ========================================= */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Nunito', sans-serif; /* Fuente legible para textos largos */
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+h1, h2, h3, h4 {
+    font-family: 'Fredoka', sans-serif; /* Fuente divertida para títulos */
+    color: var(--secondary-color);
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+a {
+    text-decoration: none;
+    color: var(--secondary-color);
+    font-weight: 700;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: var(--primary-color);
+}
+
+/* =========================================
+   3. COMPONENTS (Botones y Tarjetas)
+   ========================================= */
+
+/* El botón principal - Clave para la conversión */
+.btn-primary {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    padding: 12px 24px;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1.1rem;
+    border: 2px solid var(--text-color);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    box-shadow: var(--shadow-retro); /* El toque retro */
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-primary:hover {
+    transform: translate(-2px, -2px); /* Efecto de "levantarse" */
+    box-shadow: 6px 6px 0px var(--text-color);
+}
+
+.btn-primary:active {
+    transform: translate(2px, 2px); /* Efecto de presionar */
+    box-shadow: 0px 0px 0px var(--text-color);
+}
+
+/* Tarjetas de Producto - Donde va el dinero */
+.product-card {
+    background-color: var(--white-soft);
+    border: 2px solid var(--text-color);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px); /* Pequeña animación al pasar el ratón */
+}
+
+.product-price {
+    font-size: 1.5rem;
+    color: var(--accent-color); /* Verde para el dinero */
+    font-family: 'Fredoka', sans-serif;
+    margin: 10px 0;
+}
+
+/* =========================================
+   4. LAYOUT (Estructura Básica)
+   ========================================= */
+header {
+    background-color: var(--secondary-color);
+    padding: 1rem 2rem;
+    border-bottom: 3px solid var(--text-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Para que el logo resalte sobre el turquesa */
+header h1 {
+    color: var(--bg-color);
+    margin-bottom: 0;
+    text-shadow: 2px 2px 0px var(--text-color);
+}
+
+main {
+    flex: 1; /* Empuja el footer hacia abajo */
+    padding: 3rem 10%; /* Márgenes laterales responsivos */
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Grid para los producto */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+footer {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+    text-align: center;
+    padding: 2rem;
+    margin-top: 3rem;
+    font-family: 'Fredoka', sans-serif;
+}
