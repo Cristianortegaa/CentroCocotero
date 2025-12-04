@@ -26,4 +26,9 @@ public class Categoria {
             this.id = Utils.generadorId();
         }
     }
+
+    // Método helper para obtener el nombre descriptivo
+    public String getNombre() {
+        return tipo != null ? tipo.getDescripcion() : "Sin categoría";
+    }
 }

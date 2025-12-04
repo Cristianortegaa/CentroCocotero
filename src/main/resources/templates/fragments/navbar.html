@@ -1,0 +1,78 @@
+<header class="sticky-top">
+    <nav class="navbar custom-navbar shadow-sm">
+        <div class="container-fluid px-3 px-md-4">
+
+            <button class="btn d-md-none me-3" id="sidebarToggle">
+                <i class="fas fa-bars fs-5 text-white"></i>
+            </button>
+
+            <a class="navbar-brand me-auto d-flex" href="/">
+                <img src="/images/logo.png"
+                     alt="Logo Centro Cocotero" class="logo">
+            </a>
+
+            <div class="d-flex align-items-center flex-grow-1 justify-content-center d-none d-sm-flex">
+                <form class="d-flex custom-search-group">
+                    <input class="form-control me-2 custom-search-input" type="search"
+                           placeholder="Buscar productos..." aria-label="Search">
+                    <button class="btn custom-search-btn" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+            </div>
+
+            <div class="d-flex align-items-center ms-auto">
+
+                <div class="dropdown me-2 d-none d-lg-inline-block">
+                    <a class="btn custom-icon-btn p-2" href="#" role="button" id="filterDropdownSimple"
+                       data-bs-toggle="dropdown" aria-expanded="false" aria-label="Abrir Opciones de Filtro">
+                        <i class="fas fa-filter"></i>
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="filterDropdownSimple" style="min-width: 180px;">
+                        <li class="p-3">
+                            <h6 class="dropdown-header px-0 py-0 mb-2">Filtrar por:</h6>
+                            <div class="mb-3">
+                                <label for="priceRangeSimple" class="form-label small mb-1">Precio</label>
+                                <input type="range" class="form-range" min="0" max="100" step="5" value="100" id="priceRangeSimple">
+                            </div>
+                            <div class="mb-2">
+                                <label for="categorySelectSimple" class="form-label small mb-1">Categoría</label>
+                                <select class="form-select form-select-sm" id="categorySelectSimple">
+                                    <option selected>Todas</option>
+                                    <option value="1">Frutas</option>
+                                    <option value="2">Vegetales</option>
+                                    <option value="3">Especias</option>
+                                </select>
+                            </div>
+                            <hr class="dropdown-divider">
+                            <button type="button" class="btn btn-sm btn-primary w-100">Aplicar</button>
+                        </li>
+                    </ul>
+                </div>
+
+                <a href="#" class="btn custom-icon-btn p-2 me-2" aria-label="Carrito de Compras">
+                    <i class="fas fa-shopping-cart"></i>
+                </a>
+
+                <div class="dropdown">
+                    <a class="btn custom-icon-btn p-2" href="#" role="button" id="userDropdown"
+                       data-bs-toggle="dropdown" aria-expanded="false" aria-label="Menú de Usuario">
+                        <i class="fas fa-user-circle"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" href="#">
+                            <i class="fas fa-user-alt fa-fw me-2"></i>Ver Perfil
+                        </a></li>
+                        <li><a class="dropdown-item text-primary" href="#">
+                            <i class="fas fa-tachometer-alt fa-fw me-2"></i>Panel de Admin
+                        </a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="#">
+                            <i class="fas fa-sign-out-alt fa-fw me-2"></i>Cerrar Sesión
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+    </nav>
+</header>

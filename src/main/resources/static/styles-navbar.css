@@ -1,0 +1,313 @@
+/* =========================================
+   1. SETUP & VARIABLES (La base de todo)
+   ========================================= */
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;600&family=Nunito:wght@400;700&display=swap');
+
+:root {
+    /* Paleta Centro Cocotero */
+    --bg-color: #F4E4BA;       /* Arena Vainilla */
+    --text-color: #422A21;     /* Café Coco (Principal Oscuro) */
+    --primary-color: #FF9F1C;  /* Naranja Mango (Botones/CTA/Acento Fuerte) */
+    --secondary-color: #16BABD;/* Turquesa Caribe (Títulos/Header/Links) */
+    --accent-color: #488B49;   /* Verde Palmera (Precios/Éxito/Promo) */
+    --white-soft: #fffdf5;     /* Un blanco roto para las tarjetas */
+
+    /* Estilos Globales */
+    --border-radius: 12px;
+    --shadow-retro: 4px 4px 0px var(--text-color); /* Sombra dura principal */
+    --shadow-hover: 6px 6px 0px var(--text-color);
+
+    /* Variables de Layout */
+    --sidebar-width: 180px;
+}
+
+/* =========================================
+   2. RESET & GLOBAL STYLES
+   ========================================= */
+* { box-sizing: border-box; }
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Nunito', sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+h1, h2, h3, h4 {
+    font-family: 'Fredoka', sans-serif;
+    color: var(--secondary-color);
+    font-weight: 600;
+}
+
+a {
+    text-decoration: none;
+    color: var(--secondary-color);
+    transition: color 0.3s;
+}
+a:hover { color: var(--primary-color); }
+
+/* =========================================
+   3. HEADER & NAVBAR
+   ========================================= */
+.custom-navbar {
+    background-color: var(--secondary-color);
+    border-bottom: 3px solid var(--text-color);
+}
+
+/* Contenedor del logo y título */
+.navbar-brand {
+    align-items: center;
+}
+
+.logo {
+    /* Ajusta el tamaño de la imagen de logo */
+    height: 60px;
+    width: auto;
+    margin-right: 10px;
+    /* Efecto retro a la imagen del logo */
+    filter: drop-shadow(3px 3px 0px var(--text-color));
+}
+
+.custom-navbar h1 {
+    color: var(--bg-color); /* Logo sobre fondo Turquesa */
+    margin-bottom: 0;
+    font-size: 1.5rem; /* Título secundario al lado del logo */
+    text-shadow: 2px 2px 0px var(--text-color);
+    white-space: nowrap;
+}
+
+/* Estilo para la barra de búsqueda retro */
+.custom-search-group {
+    max-width: 400px;
+}
+.custom-search-input {
+    border: 2px solid var(--text-color);
+    border-radius: var(--border-radius);
+    box-shadow: 2px 2px 0px var(--text-color);
+}
+.custom-search-input:focus {
+    box-shadow: 3px 3px 0px var(--primary-color) !important;
+    border-color: var(--primary-color);
+}
+.custom-search-btn {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    border: 2px solid var(--text-color);
+    border-radius: var(--border-radius);
+    transition: all 0.2s;
+}
+.custom-search-btn:hover {
+    background-color: var(--text-color);
+    color: white;
+}
+.custom-icon-btn {
+    color: var(--bg-color);
+    font-size: 1.3rem;
+    padding: 0.5rem;
+    transition: transform 0.2s;
+}
+.custom-icon-btn:hover {
+    color: var(--primary-color);
+    transform: scale(1.1);
+}
+
+/* =========================================
+   4. SIDEBAR (Navegación Lateral)
+   ========================================= */
+#page-wrapper {
+    min-height: calc(100vh - 80px);
+}
+
+.custom-sidebar {
+    width: var(--sidebar-width);
+    min-width: var(--sidebar-width);
+    background-color: var(--text-color);
+    transition: margin 0.3s ease;
+}
+
+.sidebar-header h4 {
+    color: var(--primary-color);
+}
+
+.custom-sidebar-link {
+    background-color: transparent !important;
+    color: var(--bg-color) !important;
+    padding: 1rem 1.5rem;
+    font-weight: 400;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: background-color 0.2s, color 0.2s;
+}
+.custom-sidebar-link:hover, .custom-sidebar-link.active {
+    background-color: var(--secondary-color) !important;
+    color: white !important;
+    font-weight: 700;
+}
+.sidebar-promo {
+    background-color: var(--accent-color);
+    color: white;
+    font-family: 'Fredoka', sans-serif;
+}
+
+/* =========================================
+   5. COMPONENTS (Carrusel, Botones, Tarjetas)
+   ========================================= */
+
+/* Estilos del Carrusel */
+.custom-carousel {
+    border: 5px solid var(--text-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-retro);
+    overflow: hidden;
+}
+
+.custom-carousel .carousel-item img {
+    object-fit: cover;
+    height: 400px;
+    border-radius: var(--border-radius);
+}
+
+.custom-carousel .carousel-caption {
+    background-color: rgba(66, 42, 33, 0.7);
+    border-radius: var(--border-radius);
+    padding: 10px 15px;
+    bottom: 20px;
+    max-width: 90%;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 2px 2px 0px var(--primary-color);
+}
+.custom-carousel .carousel-caption h5 {
+    color: white;
+    font-family: 'Fredoka', sans-serif;
+}
+.custom-carousel .carousel-caption p {
+    color: var(--bg-color);
+}
+
+/* Botón Principal */
+.btn-primary {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    padding: 10px 20px;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1rem;
+    border: 2px solid var(--text-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-retro);
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+}
+.btn-primary:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: var(--shadow-hover);
+    background-color: var(--primary-color);
+    color: var(--text-color);
+}
+.btn-primary:active {
+    transform: translate(2px, 2px);
+    box-shadow: 0px 0px 0px var(--text-color);
+}
+
+/* Tarjetas de Producto */
+.product-card {
+    background-color: var(--white-soft);
+    border: 2px solid var(--text-color);
+    border-radius: var(--border-radius);
+    padding: 1.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-shadow: 2px 2px 0px var(--secondary-color);
+    transition: all 0.3s ease;
+    height: 100%;
+}
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-retro);
+}
+.product-card img {
+    border-radius: 8px;
+    border: 2px solid var(--text-color);
+}
+.product-price {
+    font-size: 1.8rem;
+    color: var(--accent-color);
+    font-family: 'Fredoka', sans-serif;
+    margin: 10px 0 0;
+}
+
+/* Bloque de Promoción */
+.custom-promo-box {
+    background-color: var(--accent-color);
+    border: 3px solid var(--text-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-retro);
+}
+.custom-promo-box h3 {
+    color: white;
+}
+
+/* =========================================
+   6. FOOTER
+   ========================================= */
+footer {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+    font-family: 'Nunito', sans-serif;
+    margin-top: 3rem;
+    border-top: 5px solid var(--secondary-color);
+}
+footer a {
+    color: var(--bg-color);
+    transition: color 0.3s;
+}
+footer a:hover {
+    color: var(--primary-color);
+}
+.social-icons a {
+    font-size: 1.5rem;
+}
+
+/* =========================================
+   7. RESPONSIVIDAD (Media Queries)
+   ========================================= */
+
+/* Ocultar la sidebar por defecto en pantallas pequeñas */
+@media (max-width: 767.98px) {
+    .custom-sidebar {
+        margin-left: calc(-1 * var(--sidebar-width));
+        position: fixed;
+        height: 100%;
+        z-index: 1030;
+    }
+    #page-wrapper.toggled .custom-sidebar {
+        margin-left: 0;
+    }
+    main {
+        padding: 1rem !important;
+    }
+    .custom-carousel .carousel-item img {
+        height: 200px;
+    }
+    .custom-navbar h1 {
+        font-size: 1.1rem;
+    }
+    .logo {
+        height: 40px;
+        margin-right: 5px;
+    }
+    .custom-promo-box p {
+        font-size: 0.9rem;
+    }
+}
+/* Ocultar elementos innecesarios en el header para ahorrar espacio */
+@media (max-width: 575.98px) {
+    .custom-search-group {
+        display: none !important;
+    }
+}

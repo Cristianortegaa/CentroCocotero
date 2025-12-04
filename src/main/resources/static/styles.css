@@ -95,6 +95,28 @@ a:hover {
     flex-direction: column;
     align-items: center;
     transition: transform 0.3s ease;
+    height: 100%;
+    min-height: 450px;
+}
+
+.product-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    object-position: center;
+}
+
+.product-card h4 {
+    height: 3em;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.product-card p {
+    height: 3em;
+    overflow: hidden;
 }
 
 .product-card:hover {
@@ -111,21 +133,7 @@ a:hover {
 /* =========================================
    4. LAYOUT (Estructura Básica)
    ========================================= */
-header {
-    background-color: var(--secondary-color);
-    padding: 1rem 2rem;
-    border-bottom: 3px solid var(--text-color);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-/* Para que el logo resalte sobre el turquesa */
-header h1 {
-    color: var(--bg-color);
-    margin-bottom: 0;
-    text-shadow: 2px 2px 0px var(--text-color);
-}
+/* Header styles removed to avoid conflict with styles-navbar.css */
 
 main {
     flex: 1; /* Empuja el footer hacia abajo */
@@ -143,11 +151,4 @@ main {
     margin-top: 2rem;
 }
 
-footer {
-    background-color: var(--text-color);
-    color: var(--bg-color);
-    text-align: center;
-    padding: 2rem;
-    margin-top: 3rem;
-    font-family: 'Fredoka', sans-serif;
-}
+/* Footer styles removed to avoid conflict with styles-navbar.css */

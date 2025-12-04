@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if categoria.id %}Editar{% else %}Nueva{% endif %} Categoría - Centro Cocotero</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/styles-navbar.css">
+</head>
+<body>
+    {% include "fragments/navbar" %}
+
+    <main class="container my-5" style="padding-top: 80px;">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="mb-0">
+                            <i class="fas fa-tag"></i>
+                            {% if categoria.id %}
+                                Editar Categoría
+                            {% else %}
+                                Nueva Categoría
+                            {% endif %}
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" 
+                              action="{% if categoria.id %}/app/categorias/editar/submit{% else %}/app/categorias/nueva/submit{% endif %}">
+                            
+                            {% if categoria.id %}
+                            <input type="hidden" name="id" value="{{ categoria.id }}">
+                            {% endif %}
+
+                            <div class="mb-3">
+                                <label for="tipo" class="form-label">
+                                    Tipo de Categoría <span class="text-danger">*</span>
+                                </label>
+                                <select class="form-select" id="tipo" name="tipo" required>
+                                    <option value="">Seleccione un tipo...</option>
+                                    {% for tipoCategoria in tiposCategoria %}
+                                        <option value="{{ tipoCategoria }}" 
+                                                {% if categoria.tipo == tipoCategoria %}selected{% endif %}>
+                                            {{ tipoCategoria.descripcion }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                                <div class="form-text">
+                                    Seleccione el tipo de categoría para los productos
+                                </div>
+                            </div>
+
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle"></i>
+                                <strong>Nota:</strong> Los tipos de categoría son predefinidos y no se pueden modificar.
+                            </div>
+
+                            <div class="d-flex gap-2 justify-content-end">
+                                <a href="/app/categorias" class="btn btn-outline-secondary">
+                                    <i class="fas fa-times"></i> Cancelar
+                                </a>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save"></i>
+                                    {% if categoria.id %}Actualizar{% else %}Crear{% endif %}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    {% include "fragments/footer" %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -53,6 +53,10 @@ public class Producto {
     @Version
     private Long version;
 
+    // Borrado lógico
+    @Builder.Default
+    private Boolean deleted = false;
+
     @PrePersist
     protected void onCreate() {
         if (this.id == null) {
@@ -60,6 +64,9 @@ public class Producto {
         }
         if (this.stock == null) {
             this.stock = 0; // Evitamos NullPointerException en lógica de negocio
+        }
+        if (this.deleted == null) {
+            this.deleted = false;
         }
     }
 }
