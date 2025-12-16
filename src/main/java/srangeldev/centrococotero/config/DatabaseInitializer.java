@@ -3,9 +3,9 @@ package srangeldev.centrococotero.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import srangeldev.centrococotero.producto.models.Producto;
-import srangeldev.centrococotero.producto.models.TipoCategoria;
-import srangeldev.centrococotero.producto.repositories.ProductoRepository;
+import srangeldev.centrococotero.models.Producto;
+import srangeldev.centrococotero.models.TipoCategoria;
+import srangeldev.centrococotero.repositories.ProductoRepository;
 
 import java.math.BigDecimal;
 import java.util.List;
