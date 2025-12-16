@@ -3,43 +3,98 @@ package srangeldev.centrococotero.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+
 
 @Entity
-@Data
-@Builder
-@NoArgsConstructor
+@Table(name = "users")
 @AllArgsConstructor
-@Table(name = "usuario")
-public class Usuario {
+@NoArgsConstructor
+@Getter
+@Setter
+@EntityListeners(AuditingEntityListener.class)
+public class Usuario implements UserDetails {
     @Id
-    @Column(length = 11)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
-    @NotBlank(message = "El nombre de usuario es obligatorio")
-    @Size(min = 3, max = 50, message = "El nombre de usuario debe tener entre 3 y 50 caracteres")
-    @Column(unique = true, nullable = false)
-    private String username;
-
-    @NotBlank(message = "La contraseña es obligatoria")
-    @Size(min = 8, message = "La contraseña debe tener al menos 8 caracteres")
-    @Column(nullable = false)
-    private String password;
-
-    @Size(max = 100, message = "El nombre no puede exceder 100 caracteres")
+    @NotEmpty
     private String nombre;
 
-    @Size(max = 150, message = "Los apellidos no pueden exceder 150 caracteres")
+    @NotEmpty
     private String apellidos;
 
-    private String avatarUrl;
+    private String avatar;
 
-    private boolean activo = true;
+    @CreatedDate
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaAlta;
+
+    @Email
+    private String email;
+
+    private String password;
 
     @NotEmpty
     private String rol = "USER";
 
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    @Column(name = "deleted", nullable = false)
+    private Boolean deleted = false;
+
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
+
+    @Column(name = "deleted_by")
+    private String deletedBy;
+
+    public void softDelete(String deletedBy) {
+        this.deleted = true;
+        this.deletedAt = LocalDateTime.now();
+        this.deletedBy = deletedBy;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singletonList(new SimpleGrantedAuthority(this.rol));
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 
 }
