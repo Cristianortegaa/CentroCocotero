@@ -1,6 +1,5 @@
 package srangeldev.centrococotero.controllers;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -49,27 +48,21 @@ public class ProductoController {
             productos = productos.stream().filter(p -> p.getPrecio().compareTo(precioMax) <= 0).toList();
         }
 
-        // 2. CORTAR LA LISTA (Aquí está el truco sencillo)
-        // Si hay 20 productos y pides 8, cortamos en 8.
-        // Si pides 16, cortamos en 16.
+
         int total = productos.size();
-        boolean hayMas = total > cantidad; // ¿Quedan productos ocultos?
+        boolean hayMas = total > cantidad;
 
         List<Producto> productosParaMostrar = productos.stream()
-                .limit(cantidad) // Solo mostramos la cantidad que nos piden
+                .limit(cantidad)
                 .toList();
 
-        // 3. ENVIAR A LA VISTA
+        // ENVIAR A LA VISTA
         model.addAttribute("productos", productosParaMostrar);
-
-        // Guardamos los filtros para no perderlos al recargar
         model.addAttribute("busqueda", busqueda);
         model.addAttribute("categoriaSeleccionada", categoria);
         model.addAttribute("precioMin", precioMin);
         model.addAttribute("precioMax", precioMax);
         model.addAttribute("categorias", TipoCategoria.values());
-
-        // Variables para el botón
         model.addAttribute("cantidad", cantidad);
         model.addAttribute("hayMasProductos", hayMas);
 
@@ -82,7 +75,6 @@ public class ProductoController {
         Producto producto = service.findById(id);
         model.addAttribute("producto", producto);
         model.addAttribute("categorias", TipoCategoria.values());
-        // Ajusta esto si ya tienes comentarios reales funcionando
         model.addAttribute("comentarios", service.obtenerComentarios(id));
         model.addAttribute("nuevoComentario", new Comentario());
         return "app/producto/detalle";
@@ -108,45 +100,19 @@ public class ProductoController {
         return "redirect:/producto/" + id;
     }
 
-    // FAVORITOS
+    // FAVORITOS (CORREGIDO)
     @PostMapping("/favoritos/toggle/{id}")
-    public String toggleFavorito(@PathVariable("id") String productoId,
-                                 Authentication auth, // Esto vendrá null si no hay seguridad
-                                 HttpServletRequest request) {
+    public String toggleFavorito(@PathVariable("id") String id, Authentication auth) {
 
-        Usuario usuario;
-
-        // 1. INTENTAMOS OBTENER USUARIO LOGUEADO
-        if (auth != null && auth.isAuthenticated()) {
-            usuario = usuarioRepository.findFirstByEmail(auth.getName());
-        } else {
-            // 2. MODO "SIN SEGURIDAD": Usamos un usuario de prueba
-            // Busca un usuario por defecto o crea uno al vuelo para pruebas
-            String emailPrueba = "user@prueba.com";
-            usuario = usuarioRepository.findFirstByEmail(emailPrueba);
-
-            // Si no existe el de prueba, créalo temporalmente (Opcional, solo para dev)
-            if (usuario == null) {
-                System.out.println("⚠️ Creando usuario temporal para pruebas...");
-                usuario = Usuario.builder()
-                        .email(emailPrueba)
-                        .nombre("Usuario Test")
-                        .password("1234") // Da igual ahora
-                        // .roles(...) // si tienes roles
-                        .build();
-                usuarioRepository.save(usuario);
-            }
+        if (auth == null) {
+            return "redirect:/auth/login";
         }
 
-        // 3. Ejecutar la lógica
+        Usuario usuario = usuarioRepository.findFirstByEmail(auth.getName());
+
         if (usuario != null) {
-            service.toggleFavorito(productoId, usuario);
+            service.toggleFavorito(id, usuario);
         }
-
-        // 4. Redirigir a la misma página donde estaba (Referer)
-        // Esto es mejor que redirigir siempre a /producto/{id} porque si le das like
-        // desde el HOME, quieres quedarte en el HOME.
-        String referer = request.getHeader("Referer");
-        return "redirect:" + (referer != null ? referer : "/");
+        return "redirect:/producto/" + id;
     }
 }
