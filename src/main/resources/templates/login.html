@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <title>Centro Cocotero - Portal de Acceso</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta
+      name="description"
+      content="Centro Cocotero - Plataforma de servicios premium"
+    />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="../../../../../frontProyecto/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+
+  <body class="login-page">
+    <div class="container-fluid vh-100 d-flex align-items-center justify-content-center">
+      <div class="login-container shadow-lg">
+            <!-- Logo y Brand -->
+            <div class="text-center mb-2">
+              <div class="brand-logo mb-1">
+                <div class="logo-container mx-auto mb-1">
+                  <img
+                    src="../../../../../frontProyecto/img/logo.jpg"
+                    alt="Centro Cocotero Logo"
+                    class="logo-img img-fluid rounded-circle"
+                  />
+                </div>
+                <h1 class="brand-title">Centro Cocotero</h1>
+              </div>
+              <div class="welcome-text">
+                <h2 class="welcome-title mb-2">¡Bienvenido de vuelta!</h2>
+                <p class="welcome-subtitle mb-0">
+                  Nos alegra verte de nuevo en nuestra plataforma
+                </p>
+              </div>
+            </div>
+
+            <!-- Tabs de Login/Register -->
+            <ul class="nav nav-pills nav-fill auth-tabs mb-4" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link active tab-btn"
+                  id="signin-tab"
+                  data-bs-toggle="pill"
+                  role="tab"
+                  aria-selected="true"
+                >
+                  <i class="fas fa-sign-in-alt me-2"></i>Iniciar Sesión
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link tab-btn"
+                  id="signup-tab"
+                  data-bs-toggle="pill"
+                  role="tab"
+                  aria-selected="false"
+                >
+                  <i class="fas fa-user-plus me-2"></i>Registrarse
+                </button>
+              </li>
+            </ul>
+
+            <!-- Formulario de Login -->
+            <form
+              id="signin-form"
+              class="auth-form needs-validation"
+              novalidate
+            >
+              <div class="mb-4">
+                <label for="loginEmail" class="form-label fw-semibold"
+                  >Correo Electrónico</label
+                >
+                <div class="input-group has-validation">
+                  <span class="input-group-text border-end-0">
+                    <i class="fas fa-envelope text-muted"></i>
+                  </span>
+                  <input
+                    type="email"
+                    class="form-control auth-input border-start-0 ps-0"
+                    id="loginEmail"
+                    placeholder="tu@correo.com"
+                    required
+                  />
+                  <div class="invalid-feedback">
+                    Por favor, introduce un correo válido.
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <label for="loginPassword" class="form-label fw-semibold"
+                  >Contraseña</label
+                >
+                <div class="input-group has-validation">
+                  <span class="input-group-text border-end-0">
+                    <i class="fas fa-lock text-muted"></i>
+                  </span>
+                  <input
+                    type="password"
+                    class="form-control auth-input border-start-0 border-end-0 ps-0"
+                    id="loginPassword"
+                    placeholder="Tu contraseña"
+                    required
+                  />
+                  <button
+                    class="btn btn-outline-secondary border-start-0"
+                    type="button"
+                    id="togglePassword"
+                  >
+                    <i class="fas fa-eye-slash"></i>
+                  </button>
+                  <div class="invalid-feedback">
+                    La contraseña es requerida.
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="d-flex justify-content-between align-items-center mb-4"
+              >
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="rememberMe"
+                  />
+                  <label class="form-check-label text-muted" for="rememberMe">
+                    Recuérdame
+                  </label>
+                </div>
+                <a href="#" class="forgot-link text-decoration-none"
+                  >¿Olvidaste tu contraseña?</a
+                >
+              </div>
+
+              <button
+                type="submit"
+                class="btn btn-primary w-100 py-3 mb-3 fw-semibold btn-login"
+              >
+                <i class="fas fa-sign-in-alt me-2"></i>Iniciar Sesión
+              </button>
+            </form>
+
+            <!-- Formulario de Registro (oculto por defecto) no me lo toqueis perritos -->
+            <form
+              id="signup-form"
+              class="auth-form needs-validation"
+              style="display: none"
+              novalidate
+            >
+              <div class="mb-1">
+                <label for="signupName" class="form-label fw-semibold"
+                  >Nombre Completo</label
+                >
+                <div class="input-group has-validation">
+                  <span class="input-group-text border-end-0">
+                    <i class="fas fa-user text-muted"></i>
+                  </span>
+                  <input
+                    type="text"
+                    class="form-control auth-input border-start-0 ps-0"
+                    id="signupName"
+                    placeholder="Juan Pérez"
+                    required
+                  />
+                  <div class="invalid-feedback">
+                    Por favor, introduce tu nombre completo.
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-1">
+                <label for="signupEmail" class="form-label fw-semibold"
+                  >Correo Electrónico</label
+                >
+                <div class="input-group has-validation">
+                  <span class="input-group-text border-end-0">
+                    <i class="fas fa-envelope text-muted"></i>
+                  </span>
+                  <input
+                    type="email"
+                    class="form-control auth-input border-start-0 ps-0"
+                    id="signupEmail"
+                    placeholder="tu@correo.com"
+                    required
+                  />
+                  <div class="invalid-feedback">
+                    Por favor, introduce un correo válido.
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-1">
+                <label for="signupPassword" class="form-label fw-semibold"
+                  >Contraseña</label
+                >
+                <div class="input-group has-validation">
+                  <span class="input-group-text border-end-0">
+                    <i class="fas fa-lock text-muted"></i>
+                  </span>
+                  <input
+                    type="password"
+                    class="form-control auth-input border-start-0 border-end-0 ps-0"
+                    id="signupPassword"
+                    placeholder="Mínimo 8 caracteres"
+                    required
+                    minlength="8"
+                  />
+                  <button
+                    class="btn btn-outline-secondary border-start-0"
+                    type="button"
+                  >
+                    <i class="fas fa-eye-slash"></i>
+                  </button>
+                  <div class="invalid-feedback">
+                    La contraseña debe tener al menos 8 caracteres.
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <label
+                  for="signupConfirmPassword"
+                  class="form-label fw-semibold"
+                  >Confirmar Contraseña</label
+                >
+                <div class="input-group has-validation">
+                  <span class="input-group-text border-end-0">
+                    <i class="fas fa-lock text-muted"></i>
+                  </span>
+                  <input
+                    type="password"
+                    class="form-control auth-input border-start-0 border-end-0 ps-0"
+                    id="signupConfirmPassword"
+                    placeholder="Repite tu contraseña"
+                    required
+                  />
+                  <button
+                    class="btn btn-outline-secondary border-start-0"
+                    type="button"
+                  >
+                    <i class="fas fa-eye-slash"></i>
+                  </button>
+                  <div class="invalid-feedback">
+                    Las contraseñas deben coincidir.
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-1">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="acceptTerms"
+                    required
+                  />
+                  <label class="form-check-label text-muted" for="acceptTerms">
+                    Acepto los
+                    <a href="#" class="text-decoration-none"
+                      >Términos y Condiciones</a
+                    >
+                    y la
+                    <a href="#" class="text-decoration-none"
+                      >Política de Privacidad</a
+                    >
+                  </label>
+                  <div class="invalid-feedback">
+                    Debes aceptar los términos y condiciones.
+                  </div>
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                class="btn btn-primary w-100 py-2 mb-2 fw-semibold btn-login"
+              >
+                <i class="fas fa-user-plus me-2"></i>Crear Cuenta
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+      integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const forms = document.querySelectorAll(".needs-validation");
+        forms.forEach((form) => {
+          form.addEventListener("submit", function (event) {
+            if (!form.checkValidity()) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
+            form.classList.add("was-validated");
+          });
+        });
+
+        // Funcionalidad para cambiar entre Login y Register no TOQUÉIS
+        document
+          .getElementById("signin-tab")
+          .addEventListener("click", function () {
+            switchToLogin();
+          });
+
+        document
+          .getElementById("signup-tab")
+          .addEventListener("click", function () {
+            switchToRegister();
+          });
+
+        document.querySelectorAll('button[type="button"]').forEach((btn) => {
+          if (
+            btn.querySelector("i.fa-eye-slash") ||
+            btn.querySelector("i.fa-eye")
+          ) {
+            btn.addEventListener("click", function () {
+              togglePasswordVisibility(this);
+            });
+          }
+        });
+
+        const signupForm = document.getElementById("signup-form");
+        const password = signupForm.querySelector("#signupPassword");
+        const confirmPassword = signupForm.querySelector(
+          "#signupConfirmPassword"
+        );
+
+        function validatePasswordMatch() {
+          if (password.value !== confirmPassword.value) {
+            confirmPassword.setCustomValidity("Las contraseñas no coinciden");
+          } else {
+            confirmPassword.setCustomValidity("");
+          }
+        }
+
+        password.addEventListener("input", validatePasswordMatch);
+        confirmPassword.addEventListener("input", validatePasswordMatch);
+
+        // Manejo de envío de formularios
+        document
+          .getElementById("signin-form")
+          .addEventListener("submit", function (e) {
+            e.preventDefault();
+            if (this.checkValidity()) {
+              showSuccessAlert(
+                "¡Iniciando sesión...",
+                "Redirigiendo al dashboard"
+              );
+              // Aquí irían las llamadas a la API
+            }
+          });
+
+        document
+          .getElementById("signup-form")
+          .addEventListener("submit", function (e) {
+            e.preventDefault();
+            if (this.checkValidity()) {
+              showSuccessAlert(
+                "¡Cuenta creada exitosamente!",
+                "Bienvenido a Centro Cocotero"
+              );
+              // Aquí irían las llamadas a la API
+            }
+          });
+      });
+
+      function switchToLogin() {
+        document.getElementById("signin-form").style.display = "block";
+        document.getElementById("signup-form").style.display = "none";
+        document.getElementById("signin-tab").classList.add("active");
+        document.getElementById("signup-tab").classList.remove("active");
+        document.querySelector(".welcome-title").textContent =
+          "¡Bienvenido de vuelta!";
+        document.querySelector(".welcome-subtitle").textContent =
+          "Nos alegra verte de nuevo en nuestra plataforma";
+
+        // Resetear validación
+        document
+          .getElementById("signin-form")
+          .classList.remove("was-validated");
+      }
+
+      function switchToRegister() {
+        document.getElementById("signin-form").style.display = "none";
+        document.getElementById("signup-form").style.display = "block";
+        document.getElementById("signup-tab").classList.add("active");
+        document.getElementById("signin-tab").classList.remove("active");
+        document.querySelector(".welcome-title").textContent =
+          "¡Únete a nosotros!";
+        document.querySelector(".welcome-subtitle").textContent =
+          "Crea tu cuenta y descubre todo lo que tenemos para ti";
+
+        // Resetear validación
+        document
+          .getElementById("signup-form")
+          .classList.remove("was-validated");
+      }
+
+      function togglePasswordVisibility(button) {
+        const input = button.closest(".input-group").querySelector("input");
+        const icon = button.querySelector("i");
+
+        if (input.type === "password") {
+          input.type = "text";
+          icon.classList.remove("fa-eye-slash");
+          icon.classList.add("fa-eye");
+          button.setAttribute("title", "Ocultar contraseña");
+        } else {
+          input.type = "password";
+          icon.classList.remove("fa-eye");
+          icon.classList.add("fa-eye-slash");
+          button.setAttribute("title", "Mostrar contraseña");
+        }
+      }
+
+      function showSuccessAlert(title, message) {
+        // Crear modal de éxito dinámicamente
+        const modal = document.createElement("div");
+        modal.className = "modal fade";
+        modal.innerHTML = `
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow">
+              <div class="modal-body text-center p-5">
+                <div class="text-success mb-4">
+                  <i class="fas fa-check-circle fa-4x"></i>
+                </div>
+                <h4 class="fw-bold text-success mb-3">${title}</h4>
+                <p class="text-muted mb-4">${message}</p>
+                <button type="button" class="btn btn-success px-4" data-bs-dismiss="modal">Continuar</button>
+              </div>
+            </div>
+          </div>
+        `;
+
+        document.body.appendChild(modal);
+        const bootstrapModal = new bootstrap.Modal(modal);
+        bootstrapModal.show();
+
+        modal.addEventListener("hidden.bs.modal", () => {
+          modal.remove();
+        });
+      }
+    </script>
+  </body>
+</html>
