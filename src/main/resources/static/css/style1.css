@@ -280,3 +280,16 @@ footer a:hover {
 .btn-eliminar:hover {
     transform: scale(1.2);
 }
+
+.carrusel-personalizado .carousel-item img {
+    width: 100%;        /* Ocupa todo el ancho disponible */
+    height: 600px;      /* Establece una altura fija para todas las diapositivas (ajústalo según necesites) */
+    object-fit: cover;  /* La imagen cubrirá el área, recortándose si es necesario, sin deformarse */
+}
+
+/* Opcional: Para pantallas más pequeñas, puedes reducir la altura */
+@media (max-width: 768px) {
+    .carrusel-personalizado .carousel-item img {
+        height: 250px;  /* Altura más pequeña para móviles */
+    }
+}
