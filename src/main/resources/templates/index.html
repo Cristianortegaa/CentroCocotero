@@ -1,3 +1,5 @@
+{% set csrfParamName = _csrf.parameterName %}
+{% set csrfToken = _csrf.token %}
 <!DOCTYPE html>
 <html lang="es">
 
@@ -86,11 +88,15 @@
                         <i class="fas fa-eye"></i>
                     </a>
 
-                    <a href="/carrito/agregar/{{ producto.id }}" class="btn btn-carrito flex-fill" title="Añadir al Carrito">
-                        <i class="fas fa-shopping-cart"></i>
-                    </a>
+                    <form action="/carrito/agregar/{{ producto.id }}" method="POST" class="flex-fill">
+                        <input type="hidden" name="{{ csrfParamName }}" value="{{ csrfToken }}" />
+                        <button type="submit" class="btn btn-carrito w-100" title="Añadir al Carrito">
+                            <i class="fas fa-shopping-cart"></i>
+                        </button>
+                    </form>
 
                     <form action="/favoritos/toggle/{{ producto.id }}" method="POST" class="flex-fill">
+                        <input type="hidden" name="{{ csrfParamName }}" value="{{ csrfToken }}" />
 
                         {% set esFavorito = false %}
                         {% if favoritos is defined and favoritos is not empty %}

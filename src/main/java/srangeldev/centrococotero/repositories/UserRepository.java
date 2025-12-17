@@ -24,7 +24,7 @@ public interface UserRepository extends JpaRepository<Usuario, Long> {
 
     @Query("SELECT u FROM Usuario u WHERE (u.nombre LIKE %:search% OR u.apellidos LIKE %:search% OR u.email LIKE %:search%) AND u.deleted = false")
     List<Usuario> findBySearchActive(@Param("search") String search);
-    
+
     @Query("SELECT u FROM Usuario u WHERE u.deleted = false ORDER BY u.id DESC")
     Page<Usuario> findAllActivePaginated(Pageable pageable);
 

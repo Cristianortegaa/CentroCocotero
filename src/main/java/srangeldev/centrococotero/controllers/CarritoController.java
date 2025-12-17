@@ -9,6 +9,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import srangeldev.centrococotero.models.ItemCarrito;
 import srangeldev.centrococotero.models.Usuario;
 import srangeldev.centrococotero.services.CarritoService;
+import srangeldev.centrococotero.services.FavoritoService;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -19,6 +20,7 @@ import java.util.List;
 public class CarritoController {
 
     private final CarritoService carritoService;
+    private final FavoritoService favoritoService;
 
     @GetMapping
     public String verCarrito(Model model, Authentication authentication) {
@@ -37,11 +39,12 @@ public class CarritoController {
         return "app/producto/carrito";
     }
 
-    @GetMapping("/agregar/{productoId}")
+    @PostMapping("/agregar/{productoId}")
     public String agregarProducto(@PathVariable String productoId,
                                    @RequestParam(defaultValue = "1") Integer cantidad,
                                    Authentication authentication,
-                                   RedirectAttributes redirectAttributes) {
+                                   RedirectAttributes redirectAttributes,
+                                   @RequestParam(required = false) String from) {
         if (authentication == null || !authentication.isAuthenticated()) {
             redirectAttributes.addFlashAttribute("error", "Debes iniciar sesión para agregar productos al carrito");
             return "redirect:/auth/login";
@@ -49,7 +52,15 @@ public class CarritoController {
 
         try {
             Usuario usuario = (Usuario) authentication.getPrincipal();
+            
+            // Agregar al carrito
             carritoService.agregarProducto(usuario.getId(), productoId, cantidad);
+            
+            // Si viene de favoritos, quitarlo de favoritos
+            if ("favoritos".equals(from)) {
+                favoritoService.toggleFavorito(usuario.getId(), productoId);
+            }
+            
             redirectAttributes.addFlashAttribute("success", "Producto agregado al carrito");
         } catch (RuntimeException e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());

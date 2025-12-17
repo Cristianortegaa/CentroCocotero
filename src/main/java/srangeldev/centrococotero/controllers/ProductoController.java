@@ -99,20 +99,4 @@ public class ProductoController {
 
         return "redirect:/producto/" + id;
     }
-
-    // FAVORITOS (CORREGIDO)
-    @PostMapping("/favoritos/toggle/{id}")
-    public String toggleFavorito(@PathVariable("id") String id, Authentication auth) {
-
-        if (auth == null) {
-            return "redirect:/auth/login";
-        }
-
-        Usuario usuario = usuarioRepository.findFirstByEmail(auth.getName());
-
-        if (usuario != null) {
-            service.toggleFavorito(id, usuario);
-        }
-        return "redirect:/producto/" + id;
-    }
 }

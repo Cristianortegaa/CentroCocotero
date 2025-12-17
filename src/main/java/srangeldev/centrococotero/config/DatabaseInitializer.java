@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 import srangeldev.centrococotero.models.Producto;
 import srangeldev.centrococotero.models.TipoCategoria;
 import srangeldev.centrococotero.models.Usuario;
+import srangeldev.centrococotero.repositories.FavoritoRepository;
+import srangeldev.centrococotero.repositories.ItemCarritoRepository;
 import srangeldev.centrococotero.repositories.ProductoRepository;
 import srangeldev.centrococotero.repositories.UserRepository;
 
@@ -23,13 +25,28 @@ public class DatabaseInitializer implements CommandLineRunner {
     private UserRepository userRepository;
 
     @Autowired
+    private FavoritoRepository favoritoRepository;
+
+    @Autowired
+    private ItemCarritoRepository itemCarritoRepository;
+
+    @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
     @Override
     public void run(String... args) throws Exception {
 
-        // ===== USUARIOS DE PRUEBA =====
-        System.out.println("👥 Borrando usuarios antiguos...");
+        // ===== LIMPIEZA DE DATOS =====
+        System.out.println("🧹 Limpiando datos antiguos...");
+        
+        // IMPORTANTE: Borrar en orden para respetar las claves foráneas
+        System.out.println("   - Borrando items del carrito...");
+        itemCarritoRepository.deleteAll();
+        
+        System.out.println("   - Borrando favoritos...");
+        favoritoRepository.deleteAll();
+        
+        System.out.println("   - Borrando usuarios...");
         userRepository.deleteAll();
 
         System.out.println("👥 Creando usuarios de prueba...");
