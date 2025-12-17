@@ -51,7 +51,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // ORDEN IMPORTANTE: específico primero
                         .requestMatchers("/public", "/public/", "/public/**").permitAll()
-                        .requestMatchers("/", "/images/**", "/css/**", "/js/**", "/static/**").permitAll()
+                        .requestMatchers("/", "/images/**", "/css/**", "/js/**", "/static/**", "/*.css", "/webjars/**").permitAll()
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers("/auth/**", "/files/**").permitAll()
                         .requestMatchers("/admin/**").hasAuthority("ADMIN")

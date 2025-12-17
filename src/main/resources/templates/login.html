@@ -80,6 +80,8 @@
               id="signin-form"
               class="auth-form needs-validation"
               novalidate
+              th:action="@{/auth/login-post}"
+              method="post"
             >
               <div class="mb-4">
                 <label for="loginEmail" class="form-label fw-semibold"
@@ -93,6 +95,7 @@
                     type="email"
                     class="form-control auth-input border-start-0 ps-0"
                     id="loginEmail"
+                    name="username"
                     placeholder="tu@correo.com"
                     required
                   />
@@ -114,6 +117,7 @@
                     type="password"
                     class="form-control auth-input border-start-0 border-end-0 ps-0"
                     id="loginPassword"
+                    name="password"
                     placeholder="Tu contraseña"
                     required
                   />
@@ -365,6 +369,7 @@
         confirmPassword.addEventListener("input", validatePasswordMatch);
 
         // Manejo de envío de formularios
+        /*
         document
           .getElementById("signin-form")
           .addEventListener("submit", function (e) {
@@ -377,6 +382,7 @@
               // Aquí irían las llamadas a la API
             }
           });
+        */
 
         document
           .getElementById("signup-form")
