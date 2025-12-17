@@ -58,11 +58,12 @@
 
     <h2 class="text-center mb-5"> DESCUBRE NUESTROS PRODUCTOS: </h2>
 
-    <section class="row g-4">
+    <section class="row g-1">
 
         {% for producto in productos %}
         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
             <div class="tarjeta-producto p-3 text-center rounded shadow-sm">
+
                 {% if producto.imagenes is not empty %}
                 <img src="{{ producto.imagenes[0] }}"
                      class="img-fluid rounded mb-3"
@@ -79,13 +80,34 @@
                 <span class="categoria-producto">{{ producto.categoria}}</span><br>
                 <span class="precio-producto">{{ producto.precio }}€</span>
 
-                <a href="/producto/{{ producto.id }}" class="btn btn-primary w-100 mt-3">
-                    <i class="fas fa-eye me-2"></i> Ver Detalles
-                </a>
+                <div class="d-flex gap-2 mt-2">
 
-                <a href="/carrito/agregar/{{ producto.id }}" class="btn btn-carrito w-100 mt-2">
-                    <i class="fas fa-shopping-cart me-2"></i> Añadir al Carrito
-                </a>
+                    <a href="/producto/{{ producto.id }}" class="btn btn-primary flex-fill" title="Ver Detalles">
+                        <i class="fas fa-eye"></i>
+                    </a>
+
+                    <a href="/carrito/agregar/{{ producto.id }}" class="btn btn-carrito flex-fill" title="Añadir al Carrito">
+                        <i class="fas fa-shopping-cart"></i>
+                    </a>
+
+                    <form action="/favoritos/toggle/{{ producto.id }}" method="POST" class="flex-fill">
+
+                        {% set esFavorito = false %}
+                        {% if favoritos is defined and favoritos is not empty %}
+                        {% for fav in favoritos %}
+                        {% if fav.producto.id equals producto.id %}
+                        {% set esFavorito = true %}
+                        {% endif %}
+                        {% endfor %}
+                        {% endif %}
+
+                        <button type="submit"
+                                class="btn btn-favoritos w-100 {{ esFavorito ? 'text-danger border-danger' : '' }}"
+                                title="{{ esFavorito ? 'Quitar de favoritos' : 'Añadir a favoritos' }}">
+                            <i class="{{ esFavorito ? 'fa-solid' : 'fa-regular' }} fa-heart"></i>
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
         {% else %}
@@ -96,10 +118,44 @@
         {% endfor %}
     </section>
 
-    <div class="text-center mt-5">
-        <button class="btn btn-primary btn-lg shadow">Cargar Más Productos <i class="fas fa-redo-alt ms-2"></i></button>
+    <div class="d-flex justify-content-center mt-5 mb-5">
+
+        {% if hayMasProductos %}
+        <form action="/" method="GET">
+
+            {% if busqueda is not empty %}<input type="hidden" name="busqueda" value="{{ busqueda }}">{% endif %}
+            {% if categoriaSeleccionada is not empty %}<input type="hidden" name="categoria" value="{{ categoriaSeleccionada }}">{% endif %}
+            {% if precioMin is not empty %}<input type="hidden" name="precioMin" value="{{ precioMin }}">{% endif %}
+            {% if precioMax is not empty %}<input type="hidden" name="precioMax" value="{{ precioMax }}">{% endif %}
+
+            <input type="hidden" name="cantidad" value="{{ cantidad + 8 }}">
+
+            <button type="submit" class="btn btn-primary btn-lg shadow rounded-pill px-4"
+                    onclick="localStorage.setItem('posicionScroll', window.scrollY)">
+                Cargar más productos <i class="fas fa-plus-circle ms-2"></i>
+            </button>
+        </form>
+
+        {% else %}
+        <div class="text-muted text-center">
+            <small>¡Ya has visto todo el catálogo! 🥥</small>
+        </div>
+        {% endif %}
+
     </div>
 
+</main>
+
+<script>
+    // Al cargar la página, miramos si teníamos una posición guardada
+    document.addEventListener("DOMContentLoaded", function() {
+        var pos = localStorage.getItem('posicionScroll');
+        if (pos) {
+            window.scrollTo(0, pos); // Bajamos automáticamente
+            localStorage.removeItem('posicionScroll'); // Borramos para la próxima
+        }
+    });
+</script>
 </main>
 
 {% include 'fragments/footer' %}
@@ -107,5 +163,4 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
-
 </html>

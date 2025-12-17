@@ -39,48 +39,120 @@
                     <i class="fas fa-search"></i>
                 </button>
 
+
                 <div class="dropdown">
                     <button class="btn btn-icono-personalizado" type="button" data-bs-toggle="dropdown">
                         <i class="fas fa-filter"></i>
                     </button>
+
                     <div class="dropdown-menu dropdown-menu-end p-3 shadow mt-2" style="min-width: 250px;">
 
-                        <h6 class="dropdown-header px-0">Categoría:</h6>
-                        <div class="mb-2">
-                            <select class="form-select form-select-sm" onchange="if (this.value) window.location.href=this.value">
-                                <option selected disabled>Elige categoría...</option>
-                                <option value="/">Ver Todo</option>
-                                {% for cat in categorias %}
-                                <option value="/?categoria={{ cat }}">{{ cat }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-
-                        <div class="dropdown-divider my-3"></div>
-
-                        <h6 class="dropdown-header px-0">Precio (€):</h6>
-
                         <form action="/" method="GET">
-                            {% if request.getParameter('categoria') is not empty %}
-                            <input type="hidden" name="categoria" value="{{ request.getParameter('categoria') }}">
+
+                            {% if busqueda is not empty %}
+                            <input type="hidden" name="busqueda" value="{{ busqueda }}">
                             {% endif %}
 
-                            <div class="d-flex gap-2 mb-2">
-                                <input type="number" name="precioMin" class="form-control form-control-sm" placeholder="Min" min="0" step="0.01">
-                                <input type="number" name="precioMax" class="form-control form-control-sm" placeholder="Max" min="0" step="0.01">
+                            <div class="mb-3">
+                                <label class="form-label fw-bold small">Categoría:</label>
+                                <select name="categoria" class="form-select form-select-sm">
+                                    <option value="">Ver Todo</option>
+                                    {% for cat in categorias %}
+                                    <option value="{{ cat }}" {% if cat == categoriaSeleccionada %}selected{% endif %}>
+                                        {{ cat }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <hr class="dropdown-divider my-3">
+
+                            <div class="mb-3">
+                                <label class="form-label fw-bold small">Precio (€):</label>
+                                <div class="d-flex gap-2">
+                                    <input type="number" name="precioMin" class="form-control form-control-sm"
+                                           placeholder="Min" min="0" step="0.01" value="{{ precioMin }}">
+
+                                    <input type="number" name="precioMax" class="form-control form-control-sm"
+                                           placeholder="Max" min="0" step="0.01" value="{{ precioMax }}">
+                                </div>
                             </div>
 
                             <button type="submit" class="btn btn-sm btn-primary w-100">
-                                Aplicar
+                                <i class="fas fa-check me-1 mt-1"></i> Aplicar
                             </button>
+
                         </form>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+
+                    <button class="btn btn-icono-personalizado" type="button" data-bs-toggle="dropdown">
+                        <i class="fa-solid fa-heart"></i>
+                    </button>
+
+                    <div class="dropdown-menu dropdown-menu-end p-3 mt-4" style="min-width: 350px; margin-right: -160px;">
+
+                        <h6 class="border-bottom pb-2" style="color: #16BABD">
+                            <i class="fa-solid fa-heart"></i>
+                            Mis Favoritos
+                        </h6>
+
+                        {% if favoritos is not empty %}
+
+                        {% for fav in favoritos %}
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+
+                            <div class="d-flex align-items-center gap-2">
+
+                                {% if fav.producto.imagenes is not empty %}
+                                <img src="{{ fav.producto.imagenes[0] }}"
+                                     alt="{{ fav.producto.nombre }}"
+                                     class="rounded object-fit-cover border"
+                                     width="50" height="50">
+                                {% else %}
+                                <img src="/images/logo.png"
+                                     alt="Sin imagen"
+                                     class="rounded object-fit-cover border"
+                                     width="50" height="50">
+                                {% endif %}
+
+                                <div>
+                                    <strong class="d-inline-block text-truncate" style="max-width: 140px;">
+                                        {{ fav.producto.nombre }}
+                                    </strong><br>
+                                    <span class="text-success">{{ fav.producto.precio }} €</span>
+                                </div>
+                            </div>
+
+                            <div class="d-flex gap-1">
+                                <form action="/carrito/agregar/{{ fav.producto.id }}" method="POST">
+                                    <button type="submit" class="btn btn-sm btn-success">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </button>
+                                </form>
+
+                                <form action="/favoritos/toggle/{{ fav.producto.id }}" method="POST">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+
+                        </div>
+                        {% endfor %}
+
+                        {% else %}
+                        <div class="text-center p-4">
+                            <i class="fa-solid fa-heart-crack fa-2x text-muted mb-2"></i>
+                            <p class="text-muted m-0">No hay favoritos</p>
+                        </div>
+                        {% endif %}
 
                     </div>
                 </div>
 
-                <a href="#" class="btn btn-icono-personalizado">
-                    <i class="fa-solid fa-heart"></i>
-                </a>
                 <a href="#" class="btn btn-icono-personalizado">
                     <i class="fas fa-shopping-cart"></i>
                 </a>

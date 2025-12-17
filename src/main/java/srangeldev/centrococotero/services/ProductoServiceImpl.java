@@ -1,16 +1,19 @@
-package srangeldev.centrococotero.services;
+package srangeldev.centrococotero.services.impl; // Asegúrate de que el paquete sea correcto
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional; // Importante para bases de datos
 import srangeldev.centrococotero.exceptions.ProductoNoEncontradoException;
-import srangeldev.centrococotero.models.Comentario;
-import srangeldev.centrococotero.models.Producto;
-import srangeldev.centrococotero.models.TipoCategoria;
+import srangeldev.centrococotero.models.*; // Importamos Usuario, Favorito, etc.
 import srangeldev.centrococotero.repositories.ComentarioRepository;
+import srangeldev.centrococotero.repositories.FavoritoRepository; // Nuevo import
 import srangeldev.centrococotero.repositories.ProductoRepository;
+import srangeldev.centrococotero.services.ProductoService;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -18,9 +21,9 @@ public class ProductoServiceImpl implements ProductoService {
 
     private final ProductoRepository productoRepository;
     private final ComentarioRepository comentarioRepository;
+    private final FavoritoRepository favoritoRepository;
 
-    //Productos
-
+    // PRODUCTOS
     @Override
     public List<Producto> findAll() {
         return productoRepository.findAll();
@@ -39,7 +42,7 @@ public class ProductoServiceImpl implements ProductoService {
 
     @Override
     public List<Producto> buscarPorNombre(String nombre) {
-        return productoRepository.findByNombreIgnoreCase(nombre);
+        return productoRepository.findByNombreContainingIgnoreCase(nombre);
     }
 
     @Override
@@ -54,8 +57,7 @@ public class ProductoServiceImpl implements ProductoService {
         productoRepository.save(producto);
     }
 
-    // Comentarios
-
+    // COMENTARIOS
     @Override
     public List<Comentario> obtenerComentarios(String productoId) {
         return comentarioRepository.findByProductoId(productoId);
@@ -65,5 +67,31 @@ public class ProductoServiceImpl implements ProductoService {
     public Comentario guardarComentario(Comentario comentario) {
         comentario.setFecha(LocalDateTime.now());
         return comentarioRepository.save(comentario);
+    }
+
+    // FAVORITOS
+    @Override
+    @Transactional
+    public void toggleFavorito(String productoId, Usuario usuario) {
+        Producto producto = this.findById(productoId);
+
+        Optional<Favorito> favoritoExistente = favoritoRepository.findByUsuarioAndProducto(usuario, producto);
+
+        if (favoritoExistente.isPresent()) {
+            favoritoRepository.delete(favoritoExistente.get());
+        } else {
+            Favorito nuevoFavorito = Favorito.builder()
+                    .id(UUID.randomUUID().toString().substring(0, 11))
+                    .usuario(usuario)
+                    .producto(producto)
+                    .build();
+
+            favoritoRepository.save(nuevoFavorito);
+        }
+    }
+
+    @Override
+    public List<Favorito> obtenerFavoritosDelUsuario(Usuario usuario) {
+        return favoritoRepository.findByUsuario(usuario);
     }
 }

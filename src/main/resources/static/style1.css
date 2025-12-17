@@ -117,7 +117,11 @@ a:hover { color: #FF9F1C; }
     font-family: 'Fredoka', sans-serif;
     border: 1px solid #422A21;
     border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
 .btn-primary:hover {
     background-color: #422A21;
     color: white;
@@ -129,9 +133,29 @@ a:hover { color: #FF9F1C; }
     font-family: 'Fredoka', sans-serif;
     border: 1px solid #422A21;
     border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .btn-carrito:hover {
+    background-color: #422A21;
+    color: white;
+    border-color: #422A21;
+}
+
+.btn-favoritos {
+    background-color: #E63946;
+    color: #F4E4BA;
+    font-family: 'Fredoka', sans-serif;
+    border: 1px solid #422A21;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-favoritos:hover {
     background-color: #422A21;
     color: white;
     border-color: #422A21;

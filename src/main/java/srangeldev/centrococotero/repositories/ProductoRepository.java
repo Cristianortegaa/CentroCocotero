@@ -16,5 +16,5 @@ public interface ProductoRepository extends JpaRepository<Producto, String> {
     List<Producto> findByCategoria(TipoCategoria categoria);
 
     // Buscador por nombre ignorando mayúsculas y minúsculas
-    List<Producto> findByNombreIgnoreCase(String nombre);
+    List<Producto> findByNombreContainingIgnoreCase(String nombre);
 }

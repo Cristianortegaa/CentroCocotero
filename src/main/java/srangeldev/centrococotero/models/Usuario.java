@@ -21,6 +21,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 @EntityListeners(AuditingEntityListener.class)
 public class Usuario implements UserDetails {
     @Id

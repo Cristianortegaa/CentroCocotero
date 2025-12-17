@@ -11,11 +11,13 @@ import java.util.Optional;
 
 @Repository
 public interface FavoritoRepository extends JpaRepository<Favorito, String> {
+
+    // Lista todos los favoritos de un usuario
     List<Favorito> findByUsuario(Usuario usuario);
 
     // Para comprobar si ya le dio a favorito
     Optional<Favorito> findByUsuarioAndProducto(Usuario usuario, Producto producto);
 
-    //Para borrar
+    // Para borrar
     void deleteByUsuarioAndProducto(Usuario usuario, Producto producto);
 }

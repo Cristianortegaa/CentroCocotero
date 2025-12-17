@@ -1,8 +1,6 @@
 package srangeldev.centrococotero.services;
 
-import srangeldev.centrococotero.models.Comentario;
-import srangeldev.centrococotero.models.Producto;
-import srangeldev.centrococotero.models.TipoCategoria;
+import srangeldev.centrococotero.models.*;
 
 import java.util.List;
 
@@ -18,4 +16,13 @@ public interface ProductoService {
     // Comentarios
     List<Comentario> obtenerComentarios(String productoId);
     Comentario guardarComentario(Comentario comentario);
+
+    //Favoritos
+    // 1. Para el botón: Si existe lo borra, si no existe lo crea
+    void toggleFavorito(String productoId, Usuario usuario);
+
+    // 2. Para el menú del header: Devuelve la lista de favoritos de ese usuario
+    List<Favorito> obtenerFavoritosDelUsuario(Usuario usuario);
+
+
 }
