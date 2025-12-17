@@ -179,7 +179,7 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end shadow mt-2" aria-labelledby="menuUsuario">
                         <li><h6 class="dropdown-header">Hola, {{ usuarioLogueado.nombre }}</h6></li>
-                        <li><a class="dropdown-item" href="#"><i class="fas fa-user-alt fa-fw me-2"></i>Ver Perfil</a></li>
+                        <li><a class="dropdown-item" href="/app/perfil"><i class="fas fa-user-alt fa-fw me-2"></i>Ver Perfil</a></li>
                         
                         {% set esAdmin = false %}
                         {% for auth in usuarioLogueado.authorities %}

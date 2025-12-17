@@ -2,16 +2,22 @@ package srangeldev.centrococotero.controllers;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
+import srangeldev.centrococotero.models.Pedido;
 import srangeldev.centrococotero.models.Usuario;
+import srangeldev.centrococotero.services.PedidoService;
 import srangeldev.centrococotero.services.UserService;
 import srangeldev.centrococotero.storage.StorageService;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/app/perfil")
@@ -23,30 +29,36 @@ public class ProfileController {
     @Autowired
     private StorageService storageService;
 
+    @Autowired
+    private PedidoService pedidoService;
+
     @GetMapping
-    public String showProfile(Model  model) {
+    public String showProfile(Model model) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         Usuario user = userService.buscarPorEmail(email);
+        
+        // Obtener los pedidos del usuario
+        List<Pedido> pedidos = pedidoService.buscarPorUsuario(user.getId());
+        
         model.addAttribute("usuario", user);
-        return "app/perfil";
+        model.addAttribute("pedidos", pedidos);
+        model.addAttribute("currentYear", java.time.Year.now().getValue());
+        
+        return "app/perfil/perfil";
     }
 
     @PostMapping("/editar")
-    public String updateProfile(@Valid @ModelAttribute("usuario") Usuario updatedUser,
+    public String updateProfile(@RequestParam("nombre") String nombre,
+                                @RequestParam("apellidos") String apellidos,
                                 @RequestParam(value = "file", required = false) MultipartFile file,
-                                BindingResult bindingResult,
-                                Model model) {
-
-        if (bindingResult.hasErrors()) {
-            return "app/perfil";
-        }
+                                RedirectAttributes redirectAttributes) {
 
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         Usuario existingUser = userService.buscarPorEmail(email);
 
         // Update only allowed fields
-        existingUser.setNombre(updatedUser.getNombre());
-        existingUser.setApellidos(updatedUser.getApellidos());
+        existingUser.setNombre(nombre);
+        existingUser.setApellidos(apellidos);
 
         if (file != null && !file.isEmpty()) {
             if (existingUser.getAvatar() != null && !existingUser.getAvatar().isEmpty()
@@ -60,10 +72,18 @@ public class ProfileController {
         }
 
         userService.editar(existingUser);
-        model.addAttribute("mensaje", "Perfil actualizado correctamente");
-        model.addAttribute("usuario", existingUser);
+        
+        // Actualizar el contexto de seguridad con los datos actualizados del usuario
+        UsernamePasswordAuthenticationToken newAuth = new UsernamePasswordAuthenticationToken(
+            existingUser,
+            existingUser.getPassword(),
+            existingUser.getAuthorities()
+        );
+        SecurityContextHolder.getContext().setAuthentication(newAuth);
+        
+        redirectAttributes.addFlashAttribute("mensaje", "Perfil actualizado correctamente");
 
-        return "app/perfil";
+        return "redirect:/app/perfil";
     }
 
 

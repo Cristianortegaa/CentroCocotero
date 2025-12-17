@@ -68,4 +68,9 @@ public class GlobalDataController {
         }
         return new ArrayList<>();
     }
+
+    @ModelAttribute("currentYear")
+    public int getCurrentYear() {
+        return java.time.Year.now().getValue();
+    }
 }
