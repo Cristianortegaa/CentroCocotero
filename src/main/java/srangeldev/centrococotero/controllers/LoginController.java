@@ -26,7 +26,7 @@ public class LoginController {
 
     @GetMapping("/")
     public String welcome() {
-        return "redirect:/public/";
+        return "redirect:/auth/login";
     }
 
     @GetMapping("/auth/login")

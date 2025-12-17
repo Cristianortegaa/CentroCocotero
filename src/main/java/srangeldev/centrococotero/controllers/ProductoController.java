@@ -25,7 +25,7 @@ public class ProductoController {
     // Inyectamos el repo de usuarios para saber quién da like
     private final UserRepository usuarioRepository;
 
-    @GetMapping
+    @GetMapping("/public")
     public String inicio(Model model,
                          @RequestParam(required = false) String busqueda,
                          @RequestParam(required = false) TipoCategoria categoria,

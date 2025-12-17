@@ -18,7 +18,7 @@
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="../../../../../frontProyecto/styles.css" />
+    <link rel="stylesheet" href="/styles.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -33,7 +33,7 @@
               <div class="brand-logo mb-1">
                 <div class="logo-container mx-auto mb-1">
                   <img
-                    src="../../../../../frontProyecto/img/logo.jpg"
+                    src="/images/logo.png"
                     alt="Centro Cocotero Logo"
                     class="logo-img img-fluid rounded-circle"
                   />
@@ -79,6 +79,8 @@
               id="signin-form"
               class="auth-form needs-validation"
               novalidate
+              th:action="@{/auth/login-post}"
+              method="post"
             >
               <div class="mb-4">
                 <label for="loginEmail" class="form-label fw-semibold"
@@ -92,6 +94,7 @@
                     type="email"
                     class="form-control auth-input border-start-0 ps-0"
                     id="loginEmail"
+                    name="username"
                     placeholder="tu@correo.com"
                     required
                   />
@@ -113,6 +116,7 @@
                     type="password"
                     class="form-control auth-input border-start-0 border-end-0 ps-0"
                     id="loginPassword"
+                    name="password"
                     placeholder="Tu contraseña"
                     required
                   />
@@ -364,6 +368,7 @@
         confirmPassword.addEventListener("input", validatePasswordMatch);
 
         // Manejo de envío de formularios
+        /*
         document
           .getElementById("signin-form")
           .addEventListener("submit", function (e) {
@@ -376,6 +381,7 @@
               // Aquí irían las llamadas a la API
             }
           });
+        */
 
         document
           .getElementById("signup-form")
