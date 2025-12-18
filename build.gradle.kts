@@ -59,6 +59,9 @@ dependencies {
     // Image processing
     implementation("org.imgscalr:imgscalr-lib:4.2")
 
+    // Stripe
+    implementation("com.stripe:stripe-java:31.1.0")
+
     //Test
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     //testImplementation("org.springframework.security:spring-security-test")

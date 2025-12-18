@@ -1,0 +1,11 @@
+# Copia este archivo como application-local.properties y completa con tus valores reales
+# El archivo application-local.properties NO se subirá a Git
+
+# STRIPE - Obtén tus claves en https://dashboard.stripe.com/test/apikeys
+stripe.api.key=sk_test_TU_CLAVE_SECRETA_AQUI
+stripe.public.key=pk_test_TU_CLAVE_PUBLICA_AQUI
+
+# EMAIL (SMTP) - Para Gmail, genera una contraseña de aplicación en https://myaccount.google.com/apppasswords
+spring.mail.username=tu-email@gmail.com
+spring.mail.password=tu-password-de-aplicacion-aqui
+app.mail.from=tu-email@gmail.com

@@ -22,6 +22,9 @@ public class SecurityConfig {
     UserDetailsService userDetailsService;
 
     @Autowired
+    CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
+
+    @Autowired
     public SecurityConfig(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
@@ -61,7 +64,7 @@ public class SecurityConfig {
                         .loginPage("/auth/login")
                         .loginProcessingUrl("/auth/login-post")
                         .defaultSuccessUrl("/", true)
-                        .failureUrl("/auth/login?error=true")
+                        .failureHandler(customAuthenticationFailureHandler)
                         .usernameParameter("username")
                         .passwordParameter("password")
                         .permitAll()

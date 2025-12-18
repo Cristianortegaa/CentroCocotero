@@ -1,0 +1,601 @@
+{% include 'fragments/header' %}
+
+<style>
+    .checkout-container {
+        background-color: #fffdf5;
+        min-height: calc(100vh - 200px);
+        padding: 2rem 0;
+    }
+    
+    .checkout-card {
+        background: white;
+        border: 3px solid #422A21;
+        border-radius: 15px;
+        box-shadow: 6px 6px 0px #422A21;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .checkout-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 8px 8px 0px #422A21;
+    }
+    
+    .card-header-cocotero {
+        background-color: #16BABD;
+        color: #422A21;
+        padding: 1.5rem;
+        border-bottom: 3px solid #422A21;
+        font-family: 'Luckiest Guy', cursive;
+    }
+    
+    .section-header {
+        color: #16BABD;
+        font-family: 'Luckiest Guy', cursive;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+    }
+    
+    .form-control, .form-select {
+        border: 2px solid #422A21;
+        border-radius: 12px;
+        color: #422A21;
+    }
+    
+    .form-control:focus, .form-select:focus {
+        border-color: #16BABD;
+        box-shadow: 0 0 0 0.2rem rgba(22, 186, 189, 0.25);
+    }
+    
+    .stripe-card-element {
+        background: white;
+        border: 2px solid #422A21;
+        border-radius: 12px;
+        padding: 1rem;
+        transition: all 0.3s ease;
+        box-shadow: 4px 4px 0px #422A21;
+    }
+    
+    .stripe-card-element:hover {
+        border-color: #16BABD;
+    }
+    
+    .stripe-card-element.focused {
+        border-color: #16BABD;
+        box-shadow: 0 0 0 0.2rem rgba(22, 186, 189, 0.25);
+    }
+    
+    .btn-pagar {
+        background-color: #FF9F1C;
+        color: #422A21;
+        border: 3px solid #422A21;
+        padding: 1rem;
+        font-size: 1.1rem;
+        font-weight: 700;
+        border-radius: 12px;
+        box-shadow: 5px 5px 0px #422A21;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        font-family: 'Fredoka', sans-serif;
+    }
+    
+    .btn-pagar:hover {
+        background-color: #422A21;
+        color: #F4E4BA;
+        transform: translate(2px, 2px);
+        box-shadow: 3px 3px 0px #422A21;
+    }
+    
+    .btn-pagar:active {
+        transform: translate(5px, 5px);
+        box-shadow: 0px 0px 0px #422A21;
+    }
+    
+    .producto-item {
+        transition: all 0.3s ease;
+        border-radius: 10px;
+        padding: 0.75rem;
+        border: 2px solid transparent;
+    }
+    
+    .producto-item:hover {
+        background: #fffdf5;
+        border-color: #FF9F1C;
+    }
+    
+    .producto-img {
+        width: 70px;
+        height: 70px;
+        object-fit: cover;
+        border-radius: 10px;
+        border: 2px solid #422A21;
+    }
+    
+    .badge-gratis {
+        background-color: #488B49;
+        color: white;
+        padding: 0.4rem 0.8rem;
+        border-radius: 20px;
+        font-weight: 600;
+        border: 2px solid #422A21;
+    }
+    
+    .total-box {
+        background-color: #F4E4BA;
+        padding: 1.5rem;
+        border-radius: 15px;
+        border: 2px solid #422A21;
+        margin-top: 1rem;
+    }
+    
+    .security-badge {
+        background-color: #e8f5e9;
+        border-radius: 10px;
+        padding: 1rem;
+        border: 2px solid #488B49;
+    }
+    
+    .info-icon {
+        width: 28px;
+        height: 28px;
+        background-color: #16BABD;
+        border: 2px solid #422A21;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: #422A21;
+        font-size: 0.85rem;
+        margin-right: 0.5rem;
+        font-weight: bold;
+    }
+    
+    .progress-steps {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 2rem;
+        padding: 0 2rem;
+    }
+    
+    .step {
+        flex: 1;
+        text-align: center;
+        position: relative;
+    }
+    
+    .step::before {
+        content: '';
+        position: absolute;
+        top: 18px;
+        left: 50%;
+        width: 100%;
+        height: 3px;
+        background: #F4E4BA;
+        z-index: -1;
+    }
+    
+    .step:first-child::before {
+        display: none;
+    }
+    
+    .step-circle {
+        width: 36px;
+        height: 36px;
+        background: #F4E4BA;
+        border: 3px solid #422A21;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 0.5rem;
+        font-size: 1rem;
+        font-weight: bold;
+        color: #422A21;
+        font-family: 'Fredoka', sans-serif;
+    }
+    
+    .step.active .step-circle {
+        background-color: #FF9F1C;
+        color: #422A21;
+        box-shadow: 0 0 0 3px #fffdf5;
+    }
+    
+    .step.completed .step-circle {
+        background-color: #488B49;
+        color: white;
+    }
+    
+    .step-text {
+        font-family: 'Fredoka', sans-serif;
+        color: #422A21;
+        font-weight: 600;
+    }
+</style>
+
+<div class="checkout-container">
+    <div class="container">
+        <!-- Progress Steps -->
+        <div class="progress-steps">
+            <div class="step completed">
+                <div class="step-circle"><i class="fas fa-check"></i></div>
+                <small class="d-block step-text">Carrito</small>
+            </div>
+            <div class="step active">
+                <div class="step-circle">2</div>
+                <small class="d-block step-text">Pago</small>
+            </div>
+            <div class="step">
+                <div class="step-circle">3</div>
+                <small class="d-block step-text">Confirmación</small>
+            </div>
+        </div>
+
+        <!-- Título -->
+        <div class="text-center mb-5">
+            <h1 class="display-4 mb-2" style="font-family: 'Luckiest Guy', cursive; color: #16BABD;">
+                <i class="fas fa-credit-card me-2"></i>Finalizar Compra
+            </h1>
+            <p class="lead" style="color: #422A21;">Completa los datos para procesar tu pedido tropical</p>
+        </div>
+
+        <!-- Mensajes de error -->
+        {% if error %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" style="border: 3px solid #dc3545; border-radius: 12px; background-color: #fff5f5;">
+            <i class="fas fa-exclamation-triangle me-2"></i>{{ error }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        {% endif %}
+
+        <div class="row g-4">
+            <!-- Columna izquierda: Formulario -->
+            <div class="col-lg-7">
+                <div class="card checkout-card">
+                    <div class="card-body p-4">
+                        <h3 class="section-header">
+                            <i class="fas fa-truck me-2"></i>Información de Envío
+                        </h3>
+
+                        <form id="payment-form" method="post" action="/app/checkout/procesar">
+                            <input type="hidden" name="${csrfParamName}" value="${csrfToken}">
+                            <input type="hidden" name="paymentMethodId" id="paymentMethodId">
+
+                            <!-- Dirección de envío -->
+                            <div class="mb-4">
+                                <label for="direccionEnvio" class="form-label fw-bold d-flex align-items-center" style="color: #422A21; font-family: 'Fredoka', sans-serif;">
+                                    <span class="info-icon">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                    </span>
+                                    Dirección de Envío *
+                                </label>
+                                <textarea 
+                                    class="form-control form-control-lg" 
+                                    id="direccionEnvio" 
+                                    name="direccionEnvio" 
+                                    rows="3"
+                                    maxlength="500"
+                                    required
+                                    style="border-radius: 10px;"
+                                    placeholder="Ej: Calle Mayor 123, 3ºB, 28001 Madrid, España"></textarea>
+                                <div class="form-text mt-2">
+                                    <i class="bi bi-info-circle me-1"></i>
+                                    Introduce tu dirección completa para garantizar la entrega
+                                </div>
+                            </div>
+
+                            <!-- Notas del pedido -->
+                            <div class="mb-4">
+                                <label for="notas" class="form-label fw-bold d-flex align-items-center" style="color: #422A21; font-family: 'Fredoka', sans-serif;">
+                                    <span class="info-icon">
+                                        <i class="fas fa-comment-alt"></i>
+                                    </span>
+                                    Notas del Pedido (opcional)
+                                </label>
+                                <textarea 
+                                    class="form-control" 
+                                    id="notas" 
+                                    name="notas" 
+                                    rows="2"
+                                    maxlength="1000"
+                                    placeholder="Ej: Preferiblemente entrega por la tarde"></textarea>
+                            </div>
+
+                            <div class="my-4" style="border-top: 3px dashed #FF9F1C;"></div>
+
+                            <!-- Método de pago -->
+                            <h3 class="section-header">
+                                <i class="fas fa-credit-card me-2"></i>Método de Pago
+                            </h3>
+
+                            <div class="mb-4 p-3" style="background-color: #e8f8f8; border: 2px solid #16BABD; border-radius: 12px;">
+                                <div class="d-flex align-items-center">
+                                    <div class="me-3">
+                                        <i class="fas fa-shield-alt" style="font-size: 2rem; color: #488B49;"></i>
+                                    </div>
+                                    <div>
+                                        <strong style="color: #422A21; font-family: 'Fredoka', sans-serif;">Pago 100% Seguro con Stripe</strong><br>
+                                        <small style="color: #422A21;">Tus datos están protegidos con encriptación SSL</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Elemento de Stripe Card -->
+                            <div class="mb-4">
+                                <label class="form-label fw-bold d-flex align-items-center mb-3" style="color: #422A21; font-family: 'Fredoka', sans-serif;">
+                                    <span class="info-icon">
+                                        <i class="fas fa-credit-card"></i>
+                                    </span>
+                                    Datos de la Tarjeta
+                                </label>
+                                <div id="card-element" class="stripe-card-element">
+                                    <!-- Stripe insertará el formulario de tarjeta aquí -->
+                                </div>
+                                <div id="card-errors" class="mt-2 fw-bold" role="alert" style="color: #dc3545;"></div>
+                                
+                                <div class="mt-3 d-flex justify-content-center gap-3 flex-wrap">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Visa.svg" alt="Visa" style="height: 24px;">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" style="height: 24px;">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b7/MasterCard_Logo.svg" alt="Maestro" style="height: 24px;">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/American_Express_logo_%282018%29.svg" alt="Amex" style="height: 24px;">
+                                </div>
+                            </div>
+
+                            <!-- Botones de acción -->
+                            <div class="d-grid gap-3 mt-4">
+                                <button 
+                                    type="submit" 
+                                    id="submit-button"
+                                    class="btn btn-pagar">
+                                    <i class="fas fa-lock me-2"></i>Pagar {{ total | formatPrice }}
+                                </button>
+                                <a href="/app/productos/carrito" class="btn" style="background-color: white; color: #422A21; border: 2px solid #422A21; border-radius: 12px; font-weight: 600; font-family: 'Fredoka', sans-serif;">
+                                    <i class="fas fa-arrow-left me-2"></i>Volver al Carrito
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Columna derecha: Resumen del pedido -->
+            <div class="col-lg-5">
+                <div class="card checkout-card sticky-top" style="top: 20px;">
+                    <div class="card-header card-header-cocotero">
+                        <h4 class="mb-0 d-flex align-items-center">
+                            <i class="fas fa-shopping-bag me-2"></i>Resumen del Pedido
+                        </h4>
+                        <small>{{ itemsCarrito | length }} producto{% if itemsCarrito | length > 1 %}s{% endif %}</small>
+                    </div>
+                    <div class="card-body p-4">
+                        <!-- Lista de productos -->
+                        <div class="mb-3">
+                            {% for item in itemsCarrito %}
+                            <div class="producto-item d-flex align-items-center mb-3">
+                                <img 
+                                    src="{{ item.producto.imagen }}" 
+                                    alt="{{ item.producto.nombre }}"
+                                    class="producto-img me-3">
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-1 fw-bold">{{ item.producto.nombre }}</h6>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <span class="badge bg-secondary">{{ item.cantidad }}x</span>
+                                        <small class="text-muted">{{ item.producto.precio | formatPrice }}</small>
+                                    </div>
+                                </div>
+                                <div class="text-end">
+                                    <strong class="text-primary">{{ (item.producto.precio * item.cantidad) | formatPrice }}</strong>
+                                </div>
+                            </div>
+                            {% if not loop.last %}
+                            <div style="border-bottom: 1px dashed #dee2e6;" class="mb-3"></div>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+
+                        <!-- Totales -->
+                        <div class="total-box">
+                            <div class="d-flex justify-content-between mb-3">
+                                <span style="color: #422A21; font-family: 'Fredoka', sans-serif;">
+                                    <i class="fas fa-calculator me-1"></i>Subtotal:
+                                </span>
+                                <strong style="color: #422A21;">{{ total | formatPrice }}</strong>
+                            </div>
+                            <div class="d-flex justify-content-between mb-3">
+                                <span style="color: #422A21; font-family: 'Fredoka', sans-serif;">
+                                    <i class="fas fa-truck me-1"></i>Envío:
+                                </span>
+                                <span class="badge badge-gratis">GRATIS</span>
+                            </div>
+                            <div style="border-top: 3px dashed #FF9F1C; margin: 1rem 0;"></div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h4 class="mb-0" style="color: #422A21; font-family: 'Luckiest Guy', cursive;">Total:</h4>
+                                <h3 class="mb-0 fw-bold" style="color: #16BABD; font-family: 'Luckiest Guy', cursive;">
+                                    {{ total | formatPrice }}
+                                </h3>
+                            </div>
+                        </div>
+
+                        <!-- Beneficios -->
+                        <div class="mt-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="fas fa-check-circle" style="color: #488B49;" class="me-2"></i>
+                                <small style="color: #422A21; font-family: 'Fredoka', sans-serif;">Envío gratuito en todos los pedidos</small>
+                            </div>
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="fas fa-check-circle" style="color: #488B49;" class="me-2"></i>
+                                <small style="color: #422A21; font-family: 'Fredoka', sans-serif;">Devolución gratis en 30 días</small>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-check-circle" style="color: #488B49;" class="me-2"></i>
+                                <small style="color: #422A21; font-family: 'Fredoka', sans-serif;">Garantía de calidad 100%</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer security-badge border-0">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-shield-alt" style="color: #488B49; font-size: 2.5rem;" class="me-3"></i>
+                            <div>
+                                <strong style="color: #488B49; font-family: 'Fredoka', sans-serif;">Pago 100% Seguro</strong><br>
+                                <small style="color: #422A21;">Encriptación SSL de última generación</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Info adicional -->
+                <div class="mt-4 text-center">
+                    <small style="color: #422A21;">
+                        <i class="fas fa-question-circle me-1"></i>
+                        ¿Necesitas ayuda? <a href="/contacto" style="color: #16BABD; text-decoration: none; font-weight: 600;">Contáctanos</a>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Stripe JS -->
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+    // Inicializar Stripe
+    const stripe = Stripe('{{ stripePublicKey }}');
+    const elements = stripe.elements();
+
+    // Crear elemento de tarjeta con estilos mejorados
+    const cardElement = elements.create('card', {
+        style: {
+            base: {
+                fontSize: '17px',
+                color: '#32325d',
+                fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+                fontWeight: '400',
+                '::placeholder': {
+                    color: '#a0aec0',
+                },
+                iconColor: '#667eea',
+            },
+            invalid: {
+                color: '#dc3545',
+                iconColor: '#dc3545',
+            },
+            complete: {
+                iconColor: '#28a745',
+            }
+        },
+        hidePostalCode: false,
+    });
+
+    cardElement.mount('#card-element');
+
+    // Manejo de foco para el elemento de Stripe
+    const cardElementContainer = document.getElementById('card-element');
+    
+    cardElement.on('focus', () => {
+        cardElementContainer.classList.add('focused');
+    });
+    
+    cardElement.on('blur', () => {
+        cardElementContainer.classList.remove('focused');
+    });
+
+    // Manejo de errores con animación
+    cardElement.on('change', (event) => {
+        const displayError = document.getElementById('card-errors');
+        if (event.error) {
+            displayError.innerHTML = `<i class="bi bi-exclamation-circle-fill me-2"></i>${event.error.message}`;
+            displayError.style.animation = 'shake 0.5s';
+            setTimeout(() => displayError.style.animation = '', 500);
+        } else {
+            displayError.textContent = '';
+        }
+        
+        // Validación visual
+        if (event.complete) {
+            cardElementContainer.style.borderColor = '#28a745';
+        } else if (event.error) {
+            cardElementContainer.style.borderColor = '#dc3545';
+        }
+    });
+
+    // Manejo del formulario
+    const form = document.getElementById('payment-form');
+    const submitButton = document.getElementById('submit-button');
+    const originalButtonText = submitButton.innerHTML;
+
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        // Validar dirección de envío
+        const direccion = document.getElementById('direccionEnvio').value.trim();
+        if (direccion.length < 20) {
+            document.getElementById('direccionEnvio').focus();
+            alert('Por favor, introduce una dirección de envío completa');
+            return;
+        }
+
+        // Deshabilitar botón y mostrar loading con animación
+        submitButton.disabled = true;
+        submitButton.innerHTML = `
+            <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+            <span class="spinner-grow spinner-grow-sm me-2" role="status"></span>
+            Procesando pago...
+        `;
+        submitButton.style.opacity = '0.8';
+
+        // Crear método de pago
+        const {paymentMethod, error} = await stripe.createPaymentMethod({
+            type: 'card',
+            card: cardElement,
+            billing_details: {
+                address: {
+                    line1: direccion
+                }
+            }
+        });
+
+        if (error) {
+            // Mostrar error con animación
+            const errorDisplay = document.getElementById('card-errors');
+            errorDisplay.innerHTML = `<i class="bi bi-exclamation-circle-fill me-2"></i>${error.message}`;
+            errorDisplay.style.animation = 'shake 0.5s';
+            
+            submitButton.disabled = false;
+            submitButton.innerHTML = originalButtonText;
+            submitButton.style.opacity = '1';
+            
+            // Scroll al error
+            errorDisplay.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+            // Mostrar confirmación visual
+            submitButton.innerHTML = `
+                <i class="bi bi-check-circle-fill me-2"></i>
+                Confirmando pedido...
+            `;
+            
+            // Enviar el paymentMethod.id al servidor
+            document.getElementById('paymentMethodId').value = paymentMethod.id;
+            form.submit();
+        }
+    });
+
+    // Animación de shake para errores
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+    `;
+    document.head.appendChild(style);
+
+    // Prevenir doble submit
+    let formSubmitted = false;
+    form.addEventListener('submit', (e) => {
+        if (formSubmitted) {
+            e.preventDefault();
+            return false;
+        }
+    });
+</script>
+
+{% include 'fragments/footer' %}

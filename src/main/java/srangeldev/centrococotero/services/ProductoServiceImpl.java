@@ -1,4 +1,4 @@
-package srangeldev.centrococotero.services.impl; // Asegúrate de que el paquete sea correcto
+package srangeldev.centrococotero.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

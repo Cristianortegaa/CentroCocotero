@@ -38,7 +38,7 @@ public class LoginController {
         // Para el formulario de registro
         model.addAttribute("usuario", new Usuario());
         if (error != null) {
-            model.addAttribute("loginError", "Email o contraseña incorrectos");
+            model.addAttribute("loginError", error);
         }
         if (registered != null) {
             model.addAttribute("registroExitoso", "true");

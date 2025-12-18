@@ -18,6 +18,8 @@ public interface CarritoService {
     
     List<ItemCarrito> obtenerCarrito(Long usuarioId);
     
+    List<ItemCarrito> listarPorUsuario(Long usuarioId);
+    
     BigDecimal calcularTotal(Long usuarioId);
     
     int contarItems(Long usuarioId);

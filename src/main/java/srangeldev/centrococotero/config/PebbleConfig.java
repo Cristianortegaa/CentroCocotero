@@ -111,10 +111,12 @@ public class PebbleConfig {
             }
 
             try {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMM yyyy, HH:mm", new Locale("es", "ES"));
-
                 if (input instanceof LocalDateTime) {
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMM yyyy, HH:mm", new Locale("es", "ES"));
                     return ((LocalDateTime) input).format(formatter);
+                } else if (input instanceof Date) {
+                    SimpleDateFormat sdf = new SimpleDateFormat("d MMM yyyy, HH:mm", new Locale("es", "ES"));
+                    return sdf.format((Date) input);
                 }
             } catch (Exception e) {
                 return input.toString();

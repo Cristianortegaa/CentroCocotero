@@ -105,6 +105,11 @@ public class CarritoServiceImpl implements CarritoService {
     }
 
     @Override
+    public List<ItemCarrito> listarPorUsuario(Long usuarioId) {
+        return itemCarritoRepository.findByUsuarioId(usuarioId);
+    }
+
+    @Override
     public BigDecimal calcularTotal(Long usuarioId) {
         List<ItemCarrito> items = obtenerCarrito(usuarioId);
         return items.stream()

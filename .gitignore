@@ -34,3 +34,6 @@ out/
 
 ### VS Code ###
 .vscode/
+### Application Properties ###
+application-local.properties
+upload-dir/
